@@ -1,3 +1,4 @@
+import os
 import discord
 from discord.ext import commands
 from fpl import get_fixture, HELLO, SHORT_TEAMS, get_team_fixture
@@ -44,4 +45,4 @@ async def liveScore(ctx, *, arg):
         await ctx.send(f"No match in progress for {arg}")
 
 
-client.run('ODIyNzIyOTE5Nzc1MzM4NDk2.YFWabQ.d4i5UdYqsr4xjvXUduywGtrYOwo')
+client.run(os.environ.get('DISCORD_TOKEN'))
