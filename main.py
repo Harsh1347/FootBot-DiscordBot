@@ -1,28 +1,47 @@
 import discord
 from discord.ext import commands
-from fpl import get_fixture
+from fpl import get_fixture, HELLO, SHORT_TEAMS, get_team_fixture
+from scorecard import get_score
 
-client = discord.Client()
+client = commands.Bot(command_prefix="!")
 
 
 @client.event
 async def on_ready():
-    print(f"We logged in as {client.user}")
+    print(f"Bot ready")
 
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@client.command()
+async def hello(ctx):
+    await ctx.send(HELLO)
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello from the BOT!')
 
-    if message.content.startswith('$match'):
-        await message.channel.send("Today's matches are : MUN vs LEI")
+@client.command()
+async def gwFixture(ctx, gw: int = None):
+    if gw:
+        await ctx.send(f"```{get_fixture(gw)}```")
+    else:
+        await ctx.send(f"```{get_fixture()}```")
 
-    if message.content.startswith('$eplfixture'):
 
-        await message.channel.send(f"```{get_fixture()}```")
+@client.command()
+async def teamFixture(ctx, team: str, gw: int = 5):
+    await ctx.send("\n".join(get_team_fixture(team, gw)))
+
+
+@client.command()
+async def getTeams(ctx):
+    teams = "\n".join(SHORT_TEAMS.values())
+
+    await ctx.send(teams)
+
+
+@client.command()
+async def liveScore(ctx, *, arg):
+    try:
+        await ctx.send(get_score(arg))
+    except:
+        await ctx.send(f"No match in progress for {arg}")
+
 
 client.run('ODIyNzIyOTE5Nzc1MzM4NDk2.YFWabQ.d4i5UdYqsr4xjvXUduywGtrYOwo')
