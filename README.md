@@ -1,4 +1,4 @@
-# FootBot 
+# FootBot :soccer:
 Discord Bot for Football updates. Get EPL data and live scores of all the matches.
 
 ## Commands
