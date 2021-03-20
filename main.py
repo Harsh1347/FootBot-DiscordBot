@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 from fpl import get_fixture, HELLO, SHORT_TEAMS, get_team_fixture
 from scorecard import get_score
+from standings import get_table
 
 client = commands.Bot(command_prefix="!")
 
@@ -35,6 +36,12 @@ async def getTeams(ctx):
     teams = "\n".join(SHORT_TEAMS.values())
 
     await ctx.send(teams)
+
+
+@client.command()
+async def getTable(ctx):
+
+    await ctx.send(f"```{get_table()}```")
 
 
 @client.command()

@@ -3,7 +3,7 @@ Discord Bot for Football updates. Get EPL data and live scores of all the matche
 
 ## Commands
 
-All the commands begin with !
+All the commands begin with ***!***
 
 - Upcoming fixture of EPL teams
 
@@ -12,6 +12,10 @@ All the commands begin with !
 short name can be found using the command:
 
 ```!getTeams```
+
+- EPL Standings
+
+```!getTable```
 
 - Fixture and result for present / particular gameweek for EPL Teams.
 
