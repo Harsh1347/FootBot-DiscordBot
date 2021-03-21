@@ -2,15 +2,10 @@ import requests
 import pandas as pd
 from tabulate import tabulate
 
-HELLO = """
-Hi! I'm Footbot!
-!eplfixture for epl matches
-"""
-
-
 URL = f"https://fantasy.premierleague.com/api/bootstrap-static/"
 resp = requests.get(URL).json()
 events = resp['events']
+elements = resp['elements']
 
 TEAMS = {
 }
@@ -30,6 +25,46 @@ def get_gw(gw=None):
         for e in events:
             if e['is_current'] == True:
                 return e['id']
+
+
+def get_live_stats():
+    FIX_URL = 'https://fantasy.premierleague.com/api/fixtures/'
+    fixture_raw = requests.get(FIX_URL).json()
+    result = {}
+    for game in fixture_raw:
+        if game['started'] == True and game['finished'] == False:
+            result['Home Team'] = TEAMS[game['team_h']]
+            result['Away Team'] = TEAMS[game['team_a']]
+            result['Home Score'] = game['team_h_score']
+            result['Away Score'] = game['team_a_score']
+            goal_home_scorer = game['stats'][0]['h']
+            goal_away_scorer = game['stats'][0]['a']
+            assist_home_scorer = game['stats'][1]['h']
+            assist_away_scorer = game['stats'][1]['a']
+            for val in goal_away_scorer:
+                for player in elements:
+                    if player['id'] == val['element']:
+                        val['element'] = player['web_name']
+            for val in goal_home_scorer:
+                for player in elements:
+                    if player['id'] == val['element']:
+                        val['element'] = player['web_name']
+            for val in assist_away_scorer:
+                for player in elements:
+                    if player['id'] == val['element']:
+                        val['element'] = player['web_name']
+            for val in assist_home_scorer:
+                for player in elements:
+                    if player['id'] == val['element']:
+                        val['element'] = player['web_name']
+            result['Goal Score Home'] = goal_home_scorer
+            result['Goal Score Away'] = goal_away_scorer
+            result['Assist Score Home'] = assist_home_scorer
+            result['Assist Score Away'] = assist_away_scorer
+    table = [["\n".join([f"{p['element']} - G - {p['value']}" for p in result['Goal Score Home']]), "\n".join([f"{p['element']} - G - {p['value']}" for p in result['Goal Score Away']])],
+             ["\n".join([f"{p['element']} - A - {p['value']}" for p in result['Assist Score Home']]), "\n".join([f"{p['element']} - A - {p['value']}" for p in result['Assist Score Away']])]]
+
+    return tabulate(table, headers=[f"{result['Home Team']}-{result['Home Score']}", f"{result['Away Team']}-{result['Away Score']}"], tablefmt="pretty")
 
 
 def get_fixture(gw=0):
