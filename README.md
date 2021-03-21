@@ -1,7 +1,7 @@
 # FootBot :soccer:
 Discord Bot for Football updates. Get EPL data and live scores of all the matches.
 
-## Commands
+# Commands
 
 All the commands begin with ***!***
 
@@ -13,9 +13,17 @@ short name can be found using the command:
 
 ```!getTeams```
 
-- EPL Standings
+- League Standings
 
-```!getTable```
+```!getTable <league name>```
+
+Valid league names :
+  - epl : English Premier League (England)
+  - bundesliga : Bundesliga (Germany)
+  - la-liga : La Liga (Spain)
+  - serie a : Serie A (Italy)
+  - efl : EFL Championship (England Tier 2)
+  - isl : Indian Super League (India)
 
 - Fixture and result for present / particular gameweek for EPL Teams.
 
