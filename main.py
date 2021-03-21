@@ -1,7 +1,7 @@
 import os
 import discord
 from discord.ext import commands
-from fpl import get_fixture, SHORT_TEAMS, get_team_fixture, get_live_stats
+from fpl import get_fixture, SHORT_TEAMS, get_team_fixture, get_live_stats, get_team_details
 from scorecard import get_score
 from standings import get_table
 
@@ -24,9 +24,17 @@ async def hello(ctx):
 @client.command()
 async def fplLive(ctx):
     try:
-        await ctx.send(get_live_stats())
+        await ctx.send(f"```{get_live_stats()}```")
     except:
         await ctx.send("No live match in progress")
+
+
+@client.command()
+async def fplTeamDetail(ctx, id: int):
+    try:
+        await ctx.send(get_team_details(id))
+    except:
+        await ctx.send("Re-check Team id")
 
 
 @client.command()
@@ -70,7 +78,6 @@ async def liveScore(ctx, *, arg):
     try:
         await ctx.send(get_score(arg))
     except:
-        await ctx.send(f"No match in progress for {arg}")
-
+        await ctx.send(f"No match in progress for {arg}.\nTry adding Football club if you are sure there is an ongoing match.")
 
 client.run(os.environ.get('DISCORD_TOKEN'))

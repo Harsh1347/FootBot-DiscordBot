@@ -6,6 +6,12 @@ URL = f"https://fantasy.premierleague.com/api/bootstrap-static/"
 resp = requests.get(URL).json()
 events = resp['events']
 elements = resp['elements']
+element_type = {
+    1: "GKP",
+    2: "DEF",
+    3: "MID",
+    4: "FWD",
+}
 
 TEAMS = {
 }
@@ -61,8 +67,8 @@ def get_live_stats():
             result['Goal Score Away'] = goal_away_scorer
             result['Assist Score Home'] = assist_home_scorer
             result['Assist Score Away'] = assist_away_scorer
-    table = [["\n".join([f"{p['element']} - G - {p['value']}" for p in result['Goal Score Home']]), "\n".join([f"{p['element']} - G - {p['value']}" for p in result['Goal Score Away']])],
-             ["\n".join([f"{p['element']} - A - {p['value']}" for p in result['Assist Score Home']]), "\n".join([f"{p['element']} - A - {p['value']}" for p in result['Assist Score Away']])]]
+    table = [["\n".join([f"{p['element']}(G)- {p['value']}" for p in result['Goal Score Home']]), "\n".join([f"{p['element']}(G)- {p['value']}" for p in result['Goal Score Away']])],
+             ["\n".join([f"{p['element']}(A)- {p['value']}" for p in result['Assist Score Home']]), "\n".join([f"{p['element']}(A)- {p['value']}" for p in result['Assist Score Away']])]]
 
     return tabulate(table, headers=[f"{result['Home Team']}-{result['Home Score']}", f"{result['Away Team']}-{result['Away Score']}"], tablefmt="pretty")
 
@@ -111,7 +117,7 @@ def get_team_fixture(team_name, next_fix=5):
     for game in fixture_raw:
         if game['event'] == None:
             continue
-        if game['event'] >= looper:
+        if game['event'] > looper:
             break
         if game['event'] < gw:
             continue
@@ -121,3 +127,35 @@ def get_team_fixture(team_name, next_fix=5):
             elif game['team_a'] == team_id:
                 fixture.append(f"{SHORT_TEAMS[game['team_h']]} - Away")
     return fixture
+
+
+def get_team_details(id):
+    FIX_URL = f'https://fantasy.premierleague.com/api/entry/{id}/event/29/picks/'
+    fixture_raw = requests.get(FIX_URL).json()
+    players = fixture_raw['picks']
+    eleven = []
+    pos = []
+    for player in players:
+        for i in elements:
+            if i['id'] == player['element']:
+                if player['is_captain'] == True:
+                    eleven.append(f"{i['web_name']}(C)")
+                if player['is_vice_captain'] == True:
+                    eleven.append(f"{i['web_name']}(VC)")
+                if player['is_captain'] == False and player['is_vice_captain'] == False:
+                    eleven.append(i['web_name'])
+                pos.append(element_type[i['element_type']])
+    lineup = f"Starting 11:\n\n\t\t\t  {eleven[0]}"
+    for i in range(1, len(pos)):
+        if i < 11:
+            if pos[i] != pos[i-1]:
+                lineup += f"\n\n{eleven[i]}"
+            else:
+                lineup += f"  {eleven[i]}"
+        else:
+            if i == 11:
+                lineup += f"\n\nBench:\n{eleven[i]}"
+            else:
+                lineup += f", {eleven[i]}"
+
+    return lineup
