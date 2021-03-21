@@ -32,6 +32,7 @@ Valid league names :
 if gameweek number not given, return present gameweek fixtures and result.
 
 - ***Live FPL Game Status***
+
 ```!fplLive```
 
 - ***Check for live score for any team***
