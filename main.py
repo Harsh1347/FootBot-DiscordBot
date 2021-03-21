@@ -1,7 +1,7 @@
 import os
 import discord
 from discord.ext import commands
-from fpl import get_fixture, HELLO, SHORT_TEAMS, get_team_fixture
+from fpl import get_fixture, SHORT_TEAMS, get_team_fixture, get_live_stats
 from scorecard import get_score
 from standings import get_table
 
@@ -15,7 +15,18 @@ async def on_ready():
 
 @client.command()
 async def hello(ctx):
-    await ctx.send(HELLO)
+    text = None
+    with open('README.md', 'r') as op:
+        text = op.read()
+    await ctx.send(text.replace('# ', '***'))
+
+
+@client.command()
+async def fplLive(ctx):
+    try:
+        await ctx.send(get_live_stats())
+    except:
+        await ctx.send("No live match in progress")
 
 
 @client.command()
@@ -39,9 +50,19 @@ async def getTeams(ctx):
 
 
 @client.command()
-async def getTable(ctx):
-
-    await ctx.send(f"```{get_table()}```")
+async def getTable(ctx, *, arg):
+    try:
+        await ctx.send(f"```{get_table(arg)}```")
+    except:
+        await ctx.send(""" 
+        Valid league names :
+  - epl : English Premier League (England)
+  - bundesliga : Bundesliga (Germany)
+  - la-liga : La Liga (Spain)
+  - serie a : Serie A (Italy)
+  - efl : EFL Championship (England Tier 2)
+  - isl : Indian Super League (India)
+         """)
 
 
 @client.command()
