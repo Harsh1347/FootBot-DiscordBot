@@ -1,9 +1,10 @@
 import os
 import discord
 from discord.ext import commands
-from fpl import get_fixture, SHORT_TEAMS, get_team_fixture, get_live_stats, get_team_details
+from fpl import get_fixture, SHORT_TEAMS, get_team_fixture, get_live_stats, get_team_details, fpl_team_info
 from scorecard import get_score
 from standings import get_table
+from test import get_cricket_score
 
 client = commands.Bot(command_prefix="!")
 
@@ -27,6 +28,28 @@ async def fplLive(ctx):
         await ctx.send(f"```{get_live_stats()}```")
     except:
         await ctx.send("No live match in progress")
+
+
+@client.command()
+async def cricScore(ctx, *, arg):
+    try:
+        await ctx.send(get_cricket_score(arg))
+    except:
+        await ctx.send("try passing something else as parameter")
+
+
+@client.command()
+async def fplTeamInfo(ctx, id: int):
+    # try:
+    mi, gw, cl, h2h = fpl_team_info(id)
+    await ctx.send(f"```{mi}```")
+    await ctx.send(f"```{gw[:1961]}```")
+    await ctx.send(f"```{gw[1961:]}```")
+    await ctx.send(f"```{cl}```")
+    await ctx.send(f"```{h2h}```")
+
+    # except:
+    #     await ctx.send("Re-check Team id")
 
 
 @client.command()
