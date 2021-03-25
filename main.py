@@ -4,7 +4,7 @@ from discord.ext import commands
 from fpl import get_fixture, SHORT_TEAMS, get_team_fixture, get_live_stats, get_team_details, fpl_team_info
 from scorecard import get_score
 from standings import get_table
-from test import get_cricket_score
+from cricket import get_cricket_score
 
 client = commands.Bot(command_prefix="!")
 
