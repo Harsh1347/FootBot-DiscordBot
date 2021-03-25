@@ -18,9 +18,33 @@ def get_cricket_score(team_name):
         'div', class_="imso_mh__scr-sep")
 
     team1_score = scores.find(
-        'div', class_="imspo_mh_cricket__first-score imspo_mh_cricket__one-innings-column-with-overs").text
+        'div', class_="imspo_mh_cricket__first-score imspo_mh_cricket__one-innings-column-with-overs")
     team2_score = scores.find(
-        'div', class_="imspo_mh_cricket__second-score imspo_mh_cricket__one-innings-column-with-overs").text
+        'div', class_="imspo_mh_cricket__second-score imspo_mh_cricket__one-innings-column-with-overs")
+
+    if not team1_score:
+        score_list = []
+        first_team_scores = scores.find(
+            'div', class_="imspo_mh_cricket__first-score imspo_mh_cricket__two-innings-column")
+        first_team_score = first_team_scores.find_all(
+            "div", class_='imspo_mh_cricket__score-major')
+        for s in first_team_score:
+            score_list.append(s.text)
+        team1_score = " & ".join(score_list)
+    elif team1_score:
+        team1_score = team1_score.text
+
+    if not team2_score:
+        score_list = []
+        second_team_scores = scores.find(
+            'div', class_="imspo_mh_cricket__second-score imspo_mh_cricket__two-innings-column")
+        second_team_score = second_team_scores.find_all(
+            "div", class_='imspo_mh_cricket__score-major')
+        for s in second_team_score:
+            score_list.append(s.text)
+        team2_score = " & ".join(score_list)
+    elif team2_score:
+        team2_score = team2_score.text
 
     team_playing = soup.find_all(
         'div', class_="ellipsisize liveresults-sports-immersive__team-name-width kno-fb-ctx")
@@ -34,3 +58,7 @@ def get_cricket_score(team_name):
 
     score_card = f"{cricket[0]} : {team1_score} \t {cricket[1]} : {team2_score}"
     return(score_card+"\n"+toss)
+
+
+if __name__ == '__main__':
+    print(get_cricket_score("Srilanka"))
