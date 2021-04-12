@@ -39,7 +39,7 @@ async def iplTable(ctx):
 
 
 @client.command()
-async def iplFitures(ctx):
+async def iplFixtures(ctx):
     table = get_fixture_ipl()
 
     await ctx.send(f"```{table}```")

@@ -58,7 +58,7 @@ def get_fixture_ipl():
         fixture.append((match.find(
             "div", class_="keeda_cricket_event_date").text).replace("\n", " "))
         fixture.append(
-            (match.find("div", class_="keeda_cricket_venue").text).replace("\n", " "))
+            (match.find("div", class_="keeda_cricket_venue").text))
         fixture.extend([x.text for x in match.find_all(
             "span", class_="keeda_cricket_team_name")])
 
