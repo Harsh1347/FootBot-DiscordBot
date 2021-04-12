@@ -56,15 +56,17 @@ def get_fixture_ipl():
     for match in matchCards:
         fixture = []
         fixture.append((match.find(
-            "div", class_="keeda_cricket_event_date").text).replace("\n", " "))
+            "div", class_="keeda_cricket_event_date").text))
         fixture.append(
-            (match.find("div", class_="keeda_cricket_venue").text))
+            ("\n".join(
+                ((match.find("div", class_="keeda_cricket_venue").text).split()[2:-1])))[1:-1]
+        )
         fixture.extend([x.text for x in match.find_all(
             "span", class_="keeda_cricket_team_name")])
-
+        print(fixture)
         fixtures.append(fixture)
     return tabulate(fixtures, headers=["Date / Time", "Venue", "Home Team", "Away Team"], tablefmt="pretty")
 
 
 if __name__ == "__main__":
-    print(get_fixture())
+    print(get_fixture_ipl())
