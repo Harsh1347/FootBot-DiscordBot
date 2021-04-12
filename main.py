@@ -42,9 +42,9 @@ async def iplTable(ctx):
 async def iplLastMatch(ctx):
     summary, scoreBoard, maxStatsBatsmen, maxStatsBowler = get_yester_match_result()
 
-    await ctx.send(summary)
-    await ctx.send(scoreBoard)
-    await ctx.send(maxStatsBatsmen)
+    await ctx.send(summary+"\n")
+    await ctx.send(scoreBoard+"\n")
+    await ctx.send(maxStatsBatsmen+"\n")
     await ctx.send(maxStatsBowler)
 
 
