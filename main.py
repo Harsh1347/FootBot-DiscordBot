@@ -35,7 +35,7 @@ async def fplLive(ctx):
 async def iplTable(ctx):
     table = get_ipl_table()
 
-    await ctx.send(table)
+    await ctx.send(f"```{table}```")
 
 
 @client.command()
