@@ -46,5 +46,25 @@ def get_yester_match_result():
     return (summary, scoreBoard, maxStatsBatsmen, maxStatsBowler)
 
 
+def get_fixture_ipl():
+    page = requests.get(
+        "https://www.sportskeeda.com/go/ipl/schedule", headers=header)
+    soup = BeautifulSoup(page.content, 'lxml')
+    matchCards = soup.find_all("div", class_="keeda_cricket_event_card")
+    matchCards = matchCards[1:6]
+    fixtures = []
+    for match in matchCards:
+        fixture = []
+        fixture.append((match.find(
+            "div", class_="keeda_cricket_event_date").text).replace("\n", " "))
+        fixture.append(
+            (match.find("div", class_="keeda_cricket_venue").text).replace("\n", " "))
+        fixture.extend([x.text for x in match.find_all(
+            "span", class_="keeda_cricket_team_name")])
+
+        fixtures.append(fixture)
+    return tabulate(fixtures, headers=["Date / Time", "Venue", "Home Team", "Away Team"], tablefmt="pretty")
+
+
 if __name__ == "__main__":
-    print(get_yester_match_result())
+    print(get_fixture())

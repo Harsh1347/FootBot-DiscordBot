@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 from fpl import get_fixture, SHORT_TEAMS, get_team_fixture, get_live_stats, get_team_details, fpl_team_info
 from scorecard import get_score
-from ipl import get_ipl_table, get_yester_match_result
+from ipl import get_ipl_table, get_yester_match_result, get_fixture_ipl
 from standings import get_table
 from cricket import get_cricket_score
 
@@ -34,6 +34,13 @@ async def fplLive(ctx):
 @client.command()
 async def iplTable(ctx):
     table = get_ipl_table()
+
+    await ctx.send(f"```{table}```")
+
+
+@client.command()
+async def iplFitures(ctx):
+    table = get_fixture_ipl()
 
     await ctx.send(f"```{table}```")
 
