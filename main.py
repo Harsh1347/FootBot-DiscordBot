@@ -19,8 +19,8 @@ async def on_ready():
 async def on_typing(channel, user, when):
    member = client.get_user(id='user_id')
    me = 'my_id'
-     if me != member.typing:
-         await channel.send("Lekin kyu what's the purpose")
+   if me != member.typing:
+       await channel.send("Lekin kyu what's the purpose")
 
 @client.command()
 async def hello(ctx):
