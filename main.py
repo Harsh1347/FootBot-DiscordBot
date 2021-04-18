@@ -7,7 +7,7 @@ from ipl import get_ipl_table, get_yester_match_result, get_fixture_ipl
 from standings import get_table
 from cricket import get_cricket_score
 
-client = commands.Bot(command_prefix="!")
+client = commands.Bot(command_prefix="")
 
 
 @client.event
@@ -21,6 +21,10 @@ async def hello(ctx):
     with open('README.md', 'r') as op:
         text = op.read()
     await ctx.send(text.replace('# ', '***'))
+    
+@client.command()
+async def salmon(ctx):
+    await ctx.send("Lekin kyu whats the purpose?")
 
 
 @client.command()
