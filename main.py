@@ -16,8 +16,14 @@ async def on_ready():
     
 @client.event
 async def on_message(message):
-    if message.author != client.user:
+    channel = message.channel
+    isbot = message.author.bot
+    if not isbot:
         await client.message(message.channel, message.content)
+    else:
+        pass
+
+
 
 
 @client.command()
