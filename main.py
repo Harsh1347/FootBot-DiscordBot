@@ -22,7 +22,7 @@ async def hello(ctx):
         text = op.read()
     await ctx.send(text.replace('# ', '***'))
     
-@bot.event
+@client.event
 async def on_message(message):
     if message.author != bot.user:
         await bot.send_message(message.channel, "Lekin kyu what's the purpose!?")
