@@ -17,7 +17,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.author != client.user:
-        await client.send_message(message.channel, message.content)
+        await client.message(message.channel, message.content)
 
 
 @client.command()
