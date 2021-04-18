@@ -7,7 +7,7 @@ from ipl import get_ipl_table, get_yester_match_result, get_fixture_ipl
 from standings import get_table
 from cricket import get_cricket_score
 
-intents = discord.Intents.default()
+intents = discord.Intents.all()
 client = commands.Bot(command_prefix="!",intents=intents)
 
 
