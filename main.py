@@ -15,13 +15,11 @@ async def on_ready():
     print(f"Bot ready")
     
 @client.event
-async def on_message(message):
-    channel = message.channel
-    isbot = message.author.bot
-    if not isbot:
-        await channel.send("Lekin Kyu whats the purpose!?")
-    else:
-        pass
+async def on_typing(channel, user, when):
+       member = client.get_user(id='user_id')
+       me = 'my_id'
+         if me != member.typing:
+             await channel.send("Lekin kyu what's the purpose")
 
 @client.command()
 async def hello(ctx):
