@@ -51,8 +51,8 @@ async def iplLastMatch(ctx):
 
     await ctx.send(summary+"\n")
     await ctx.send(scoreBoard+"\n")
-    await ctx.send(maxStatsBatsmen+"\n")
-    await ctx.send(maxStatsBowler)
+    # await ctx.send(maxStatsBatsmen+"\n")
+    # await ctx.send(maxStatsBowler)
 
 
 @client.command()
