@@ -19,12 +19,9 @@ async def on_message(message):
     channel = message.channel
     isbot = message.author.bot
     if not isbot:
-        await client.message(message.channel, message.content)
+        await channel.send("Lekin Kyu whats the purpose!?")
     else:
         pass
-
-
-
 
 @client.command()
 async def hello(ctx):
