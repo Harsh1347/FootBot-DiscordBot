@@ -7,7 +7,7 @@ from ipl import get_ipl_table, get_yester_match_result, get_fixture_ipl
 from standings import get_table
 from cricket import get_cricket_score
 
-intents = discord.Intents.all()
+intents = discord.Intents.default()
 client = commands.Bot(command_prefix="!",intents=intents)
 
 
@@ -15,12 +15,10 @@ client = commands.Bot(command_prefix="!",intents=intents)
 async def on_ready():
     print(f"Bot ready")
     
-@client.listen
+@client.event
 async def on_typing(channel, user, when):
-   member = client.get_user(id='user_id')
-   me = 'my_id'
-   if me != member.typing:
-       await channel.send("Lekin kyu what's the purpose")
+   
+   await channel.send("Lekin kyu what's the purpose")
 
 @client.command()
 async def hello(ctx):
