@@ -15,7 +15,7 @@ client = commands.Bot(command_prefix="!",intents=intents)
 async def on_ready():
     print(f"Bot ready")
     
-@client.event
+@client.listen
 async def on_typing(channel, user, when):
    member = client.get_user(id='user_id')
    me = 'my_id'
