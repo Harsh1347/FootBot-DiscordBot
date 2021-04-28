@@ -16,10 +16,11 @@ client = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"Bot ready")
 
-# @client.event
-# async def on_typing(channel, user, when):
 
-#    await channel.send("Lekin kyu what's the purpose")
+@client.event
+async def on_typing(channel, user, when):
+    print("Someone typing")
+    await channel.send("Lekin kyu what's the purpose")
 
 
 @client.command()
@@ -60,17 +61,6 @@ async def iplLastMatch(ctx):
     await ctx.send(scoreBoard+"\n")
     # await ctx.send(maxStatsBatsmen+"\n")
     # await ctx.send(maxStatsBowler)
-
-
-@client.command()
-async def followMatch(ctx, *, arg):
-    try:
-        score = get_cricket_score(arg)
-        while "won" not in score:
-            await ctx.send(score)
-            time.sleep(60)
-    except:
-        await ctx.send("try passing something else as parameter")
 
 
 @client.command()
